@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Media Player</title>
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/skin/blue.monday/jplayer.blue.monday.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js"></script>
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script src="app.js" defer></script>
+</head>
+<body class="mdc-theme--surface">
+    <!-- Updated Header -->
+<header class="mdc-top-app-bar mdc-elevation--z1">
+    <div class="mdc-top-app-bar__row">
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+            <span class="mdc-top-app-bar__title">
+                <span class="app-logo">
+                    <span class="material-icons">graphic_eq</span>
+                </span>
+                <span class="app-title">SoundWave</span>
+            </span>
+        </section>
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+            <button class="mdc-icon-button" aria-label="Search">
+                <span class="material-icons">search</span>
+            </button>
+            <button class="mdc-icon-button" aria-label="Add Music">
+                <span class="material-icons">add</span>
+            </button>
+            <button class="mdc-icon-button" aria-label="Account">
+                <span class="material-icons">account_circle</span>
+            </button>
+        </section>
+    </div>
+</header>
+
+    <main class="mdc-top-app-bar--prominent-fixed-adjust">
+        <div class="app-container">
+            <div class="player-layout">
+                <!-- Main Player Card -->
+                <div class="mdc-card mdc-card--outlined main-player-card">
+                    <div class="mdc-card__primary-action" tabindex="0">
+                        <!-- Album Art & Track Info -->
+                        <div class="track-info-section">
+                            <div class="album-art-container">
+                                <div class="album-art mdc-elevation--z4">
+                                    <span class="material-icons">album</span>
+                                </div>
+                            </div>
+                            <div class="track-details">
+                                <h2 class="mdc-typography--headline5 track-title">SoundHelix Song 1</h2>
+                                <p class="mdc-typography--body2 mdc-theme--text-secondary-on-background artist-name">Various Artists</p>
+                                <div class="track-badges">
+                                    <div class="mdc-chip">
+                                        <div class="mdc-chip__text">MP3</div>
+                                    </div>
+                                    <div class="mdc-chip">
+                                        <div class="mdc-chip__text">320kbps</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="track-actions">
+                                <button class="mdc-icon-button" aria-label="Favorite">
+                                    <span class="material-icons">favorite_border</span>
+                                </button>
+                                <button class="mdc-icon-button" aria-label="Share">
+                                    <span class="material-icons">share</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Player Controls -->
+                        <div class="player-controls-section">
+                            <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+                            <div id="jp_container_1" class="jp-audio-material" role="application" aria-label="media player">
+                                <div class="jp-type-single">
+                                    <div class="jp-gui jp-interface">
+                                        <!-- Progress Slider -->
+                                        <div class="jp-progress progress-section">
+                                            <!-- Elapsed Time / Total Time -->
+                                            <div class="time-display">
+                                                <span class="jp-current-time mdc-typography--body2">00:00</span>
+                                                <span class="mdc-typography--body2 mdc-theme--text-secondary-on-background"> / </span>
+                                                <span class="jp-duration mdc-typography--body2 mdc-theme--text-secondary-on-background">00:00</span>
+                                            </div>
+                                            
+                                            <!-- Simple Progress Bar -->
+                                            <div class="progress-bar-container">
+                                                <div class="progress-bar-background"></div>
+                                                <div class="progress-bar-elapsed jp-play-bar" style="width: 0%"></div>
+                                                <div class="progress-bar-handle"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Control Buttons -->
+                                        <div class="jp-controls control-buttons">
+                                            <button class="mdc-icon-button jp-previous" aria-label="Previous">
+                                                <span class="material-icons">skip_previous</span>
+                                            </button>
+                                            <button class="mdc-fab mdc-fab--mini jp-play" aria-label="Play">
+                                                <div class="mdc-fab__ripple"></div>
+                                                <span class="material-icons mdc-fab__icon">play_arrow</span>
+                                            </button>
+                                            <button class="mdc-fab mdc-fab--mini jp-pause" aria-label="Pause" style="display: none;">
+                                                <div class="mdc-fab__ripple"></div>
+                                                <span class="material-icons mdc-fab__icon">pause</span>
+                                            </button>
+                                            <button class="mdc-icon-button jp-next" aria-label="Next">
+                                                <span class="material-icons">skip_next</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Playlist Card -->
+                <div class="mdc-card mdc-card--outlined playlist-card">
+                    <div class="playlist-header">
+                        <h3 class="mdc-typography--subtitle1">Now Playing</h3>
+                    </div>
+                    
+                    <div class="mdc-list playlist-list" id="playlist">
+                        <div class="mdc-list-item mdc-list-item--activated playlist-item" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+                            <span class="mdc-list-item__ripple"></span>
+                            <span class="mdc-list-item__text">
+                                <span class="mdc-list-item__primary-text">SoundHelix Song 1</span>
+                            </span>
+                            <span class="mdc-list-item__end">3:24</span>
+                        </div>
+                        
+                        <div class="mdc-list-item playlist-item" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
+                            <span class="mdc-list-item__ripple"></span>
+                            <span class="mdc-list-item__text">
+                                <span class="mdc-list-item__primary-text">SoundHelix Song 2</span>
+                            </span>
+                            <span class="mdc-list-item__end">4:12</span>
+                        </div>
+                        
+                        <div class="mdc-list-item playlist-item" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3">
+                            <span class="mdc-list-item__ripple"></span>
+                            <span class="mdc-list-item__text">
+                                <span class="mdc-list-item__primary-text">SoundHelix Song 3</span>
+                            </span>
+                            <span class="mdc-list-item__end">3:56</span>
+                        </div>
+                        
+                        <div class="mdc-list-item playlist-item" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3">
+                            <span class="mdc-list-item__ripple"></span>
+                            <span class="mdc-list-item__text">
+                                <span class="mdc-list-item__primary-text">SoundHelix Song 4</span>
+                            </span>
+                            <span class="mdc-list-item__end">2:48</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

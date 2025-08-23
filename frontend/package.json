@@ -1,0 +1,14 @@
+{
+  "name": "my-jquery-project",
+  "version": "1.0.0",
+  "description": "A basic jQuery project",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "live-server src"
+  },
+  "dependencies": {
+    "jquery": "^3.6.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
