@@ -1,404 +1,504 @@
-/* Clean, minimal media player styling */
+/* ===================================================================
+   MEDIA PLAYER STYLESHEET
+   ===================================================================
+   This CSS file styles the entire media player interface using:
+   - CSS Custom Properties (variables) for consistent theming
+   - CSS Grid and Flexbox for responsive layout
+   - Material Design principles for modern UI
+   - Smooth animations and transitions
+   ================================================================== */
 
+/* ===================================================================
+   CSS CUSTOM PROPERTIES (VARIABLES)
+   ===================================================================
+   These variables define the color scheme and spacing used throughout
+   the application. Changing these values will update the entire theme.
+   ================================================================== */
 :root {
-  /* Modern, minimalist color palette */
-  --primary: #2962ff;
-  --primary-light: #768fff;
-  --primary-dark: #0039cb;
-  --surface: #ffffff;
-  --background: #fafafa;
-  --on-primary: #ffffff;
-  --on-surface: rgba(0, 0, 0, 0.87);
-  --on-surface-medium: rgba(0, 0, 0, 0.6);
-  --on-surface-light: rgba(0, 0, 0, 0.38);
-  --divider: rgba(0, 0, 0, 0.06);
-  --shadow-light: 0 1px 2px rgba(0, 0, 0, 0.08);
-  --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.1);
-  --spacing-unit: 8px;
-  --border-radius: 8px;
-  --font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* COLOR PALETTE - Modern, minimalist blue theme */
+  --primary: #2962ff;           /* Main brand color (bright blue) */
+  --primary-light: #768fff;     /* Lighter shade for highlights */
+  --primary-dark: #0039cb;      /* Darker shade for depth */
+  --surface: #ffffff;           /* Card and surface backgrounds */
+  --background: #fafafa;        /* Main page background (light gray) */
+  --on-primary: #ffffff;        /* Text color on primary background */
+  --on-surface: rgba(0, 0, 0, 0.87);        /* Primary text color (87% black) */
+  --on-surface-medium: rgba(0, 0, 0, 0.6);  /* Secondary text color (60% black) */
+  --on-surface-light: rgba(0, 0, 0, 0.38);  /* Disabled text color (38% black) */
+  --divider: rgba(0, 0, 0, 0.06);            /* Subtle divider lines */
+  
+  /* SHADOWS - Material Design elevation system */
+  --shadow-light: 0 1px 2px rgba(0, 0, 0, 0.08);   /* Subtle shadow for cards */
+  --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.1);   /* Medium shadow for emphasis */
+  
+  /* SPACING AND LAYOUT */
+  --spacing-unit: 8px;          /* Base spacing unit (Material Design 8dp grid) */
+  --border-radius: 8px;         /* Consistent border radius for rounded corners */
+  --font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif; /* Font stack */
 }
 
+/* ===================================================================
+   GLOBAL RESET AND BASE STYLES
+   ===================================================================
+   Reset browser defaults and set up consistent base styling
+   ================================================================== */
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  box-sizing: border-box;  /* Include padding/border in element width/height */
+  margin: 0;               /* Remove default margins */
+  padding: 0;              /* Remove default padding */
 }
 
 body {
-  font-family: var(--font-family);
-  background-color: var(--background);
-  color: var(--on-surface);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-family);           /* Apply our font stack */
+  background-color: var(--background);       /* Light gray background */
+  color: var(--on-surface);                  /* Dark text color */
+  line-height: 1.5;                          /* Comfortable line spacing */
+  -webkit-font-smoothing: antialiased;       /* Smooth fonts on macOS */
+  -moz-osx-font-smoothing: grayscale;        /* Smooth fonts on Firefox/macOS */
 }
 
-/* App structure */
+/* ===================================================================
+   TOP NAVIGATION BAR
+   ===================================================================
+   Header with app branding and action buttons
+   ================================================================== */
 .mdc-top-app-bar {
-  background-color: white;
-  color: rgba(0, 0, 0, 0.87);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-  height: 64px;
-  position: fixed;
-  transition: box-shadow 0.2s ease;
+  background-color: white;                    /* White background for clean look */
+  color: rgba(0, 0, 0, 0.87);                /* Dark text on white background */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08); /* Subtle shadow for depth */
+  height: 64px;                              /* Standard Material Design height */
+  position: fixed;                           /* Stay at top when scrolling */
+  transition: box-shadow 0.2s ease;          /* Smooth shadow transitions */
 }
 
 .mdc-top-app-bar--prominent {
-  height: 64px; /* Reduced height for minimal design */
+  height: 64px;  /* Reduced height for minimal design (not prominent) */
 }
 
 .mdc-top-app-bar__title {
-  color: var(--on-surface);
-  font-weight: 500;
-  font-size: 18px;
+  color: var(--on-surface);  /* Dark text color */
+  font-weight: 500;          /* Medium font weight */
+  font-size: 18px;           /* Readable size */
 }
 
 .mdc-icon-button {
-  color: var(--on-surface-medium);
+  color: var(--on-surface-medium);  /* Medium gray for secondary buttons */
 }
 
+/* ===================================================================
+   MAIN APPLICATION LAYOUT
+   ===================================================================
+   Container and grid system for the main player interface
+   ================================================================== */
 .app-container {
-  padding: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 24px;            /* Generous padding around content */
+  max-width: 1200px;        /* Maximum width for large screens */
+  margin: 0 auto;           /* Center the container */
 }
 
 .player-layout {
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 24px;
-  min-height: 500px;
+  display: grid;                      /* Use CSS Grid for layout */
+  grid-template-columns: 1fr 300px;   /* Main content + 300px sidebar */
+  gap: 24px;                          /* Space between grid items */
+  min-height: 500px;                  /* Minimum height for content */
 }
 
-/* Cards */
+/* ===================================================================
+   CARD COMPONENTS
+   ===================================================================
+   Base styling for Material Design cards
+   ================================================================== */
 .mdc-card {
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  background-color: var(--surface);
-  border: none;
+  border-radius: var(--border-radius);  /* Rounded corners */
+  overflow: hidden;                     /* Clip content to rounded corners */
+  background-color: var(--surface);     /* White background */
+  border: none;                         /* No default border */
 }
 
 .mdc-card--outlined {
-  border: 1px solid var(--divider);
+  border: 1px solid var(--divider);  /* Subtle border for outlined cards */
 }
 
 .main-player-card {
-  box-shadow: var(--shadow-medium);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  box-shadow: var(--shadow-medium);  /* More prominent shadow for main card */
+  height: 100%;                      /* Fill available height */
+  display: flex;                     /* Use flexbox for internal layout */
+  flex-direction: column;            /* Stack children vertically */
 }
 
 .playlist-card {
-  box-shadow: var(--shadow-light);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--surface);
+  box-shadow: var(--shadow-light);   /* Lighter shadow for secondary card */
+  height: 100%;                      /* Fill available height */
+  display: flex;                     /* Use flexbox for internal layout */
+  flex-direction: column;            /* Stack children vertically */
+  background-color: var(--surface);  /* Ensure white background */
 }
 
-/* Player elements */
+/* ===================================================================
+   TRACK INFORMATION SECTION
+   ===================================================================
+   Album art, song title, artist, and action buttons
+   ================================================================== */
 .track-info-section {
-  padding: 32px 32px 16px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
+  padding: 32px 32px 16px;  /* Generous padding (top/sides, smaller bottom) */
+  display: flex;            /* Horizontal layout */
+  align-items: center;      /* Center items vertically */
+  gap: 24px;               /* Space between elements */
 }
 
 .album-art-container {
-  flex-shrink: 0;
+  flex-shrink: 0;  /* Don't shrink this element */
 }
 
 .album-art {
-  width: 120px;
+  width: 120px;                       /* Fixed square dimensions */
   height: 120px;
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius);  /* Rounded corners */
+  /* Gradient background as placeholder for actual album art */
   background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-  display: flex;
+  display: flex;                      /* Center the icon */
   align-items: center;
   justify-content: center;
-  color: var(--on-primary);
-  font-size: 36px;
-  box-shadow: var(--shadow-light);
+  color: var(--on-primary);           /* White icon on colored background */
+  font-size: 36px;                    /* Large icon size */
+  box-shadow: var(--shadow-light);    /* Subtle shadow for depth */
 }
 
 .track-details {
-  flex-grow: 1;
+  flex-grow: 1;  /* Take up remaining space */
 }
 
 .track-title {
-  font-size: 24px;
-  font-weight: 500;
-  margin-bottom: 8px;
-  color: var(--on-surface);
+  font-size: 24px;                /* Large, prominent title */
+  font-weight: 500;               /* Medium weight for readability */
+  margin-bottom: 8px;             /* Space below title */
+  color: var(--on-surface);       /* Dark text color */
 }
 
 .artist-name {
-  font-size: 14px;
-  color: var(--on-surface-medium);
-  margin-bottom: 16px;
+  font-size: 14px;                    /* Smaller secondary text */
+  color: var(--on-surface-medium);    /* Medium gray color */
+  margin-bottom: 16px;               /* Space below artist name */
 }
 
+/* Format badges (MP3, 320kbps, etc.) */
 .track-badges {
-  display: flex;
-  gap: 8px;
+  display: flex;  /* Horizontal layout */
+  gap: 8px;      /* Space between badges */
 }
 
 .mdc-chip {
-  height: 28px;
-  border-radius: 14px;
-  background-color: rgba(0, 0, 0, 0.04);
+  height: 28px;                          /* Compact height */
+  border-radius: 14px;                   /* Pill shape */
+  background-color: rgba(0, 0, 0, 0.04); /* Very light gray background */
 }
 
 .mdc-chip__text {
-  font-size: 12px;
-  color: var(--on-surface-medium);
+  font-size: 12px;                    /* Small text */
+  color: var(--on-surface-medium);    /* Medium gray text */
 }
 
 .track-actions {
-  display: flex;
-  flex-direction: column;
+  display: flex;           /* Stack action buttons */
+  flex-direction: column;  /* Vertically */
 }
 
-/* Controls */
+/* ===================================================================
+   PLAYER CONTROLS SECTION
+   ===================================================================
+   Progress bar, playback controls, and volume
+   ================================================================== */
 .player-controls-section {
-  padding: 16px 32px 32px;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
+  padding: 16px 32px 32px;  /* Less top padding, more bottom */
+  flex-grow: 1;             /* Take remaining space in card */
+  display: flex;            /* Flexbox layout */
+  flex-direction: column;   /* Stack elements vertically */
 }
 
-/* Progress bar */
+/* ===================================================================
+   PROGRESS BAR STYLING
+   ===================================================================
+   Custom progress bar with smooth animations and hover effects
+   ================================================================== */
 .progress-section {
-  margin-top: 16px;
+  margin-top: 16px;  /* Space above progress section */
 }
 
 .time-display {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: var(--on-surface-medium);
-  margin-bottom: 8px;
+  display: flex;                      /* Horizontal layout */
+  justify-content: space-between;     /* Space out start/end times */
+  font-size: 12px;                    /* Small text */
+  color: var(--on-surface-medium);    /* Medium gray */
+  margin-bottom: 8px;                 /* Space below time display */
 }
 
 .progress-bar-container {
-  height: 4px;
-  background-color: rgba(0, 0, 0, 0.08);
-  border-radius: 2px;
-  cursor: pointer;
-  position: relative;
-  overflow: visible;
-  margin-bottom: 32px;
+  height: 4px;                           /* Thin progress bar */
+  background-color: rgba(0, 0, 0, 0.08); /* Light gray background track */
+  border-radius: 2px;                    /* Rounded ends */
+  cursor: pointer;                       /* Show it's clickable */
+  position: relative;                    /* For absolutely positioned children */
+  overflow: visible;                     /* Allow handle to extend beyond */
+  margin-bottom: 32px;                   /* Space below progress bar */
 }
 
 .progress-bar-background {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 2px;
+  position: absolute;  /* Position within container */
+  width: 100%;         /* Full width background */
+  height: 100%;        /* Full height */
+  border-radius: 2px;   /* Match container radius */
 }
 
+/* The actual progress indicator */
 .progress-bar-elapsed, .jp-play-bar {
-  position: absolute;
-  height: 100%;
-  background-color: var(--primary);
-  border-radius: 2px;
-  top: 0;
-  left: 0;
-  width: 0;
+  position: absolute;                /* Position within container */
+  height: 100%;                      /* Full height of container */
+  background-color: var(--primary);  /* Blue progress color */
+  border-radius: 2px;                /* Rounded ends */
+  top: 0;                           /* Align to top */
+  left: 0;                          /* Start from left */
+  width: 0;                         /* Start with no width (will be updated by JS) */
 }
 
+/* Draggable handle for seeking */
 .progress-bar-handle {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-left: -6px;
-  width: 12px;
+  position: absolute;                /* Position within container */
+  top: 50%;                         /* Center vertically */
+  transform: translateY(-50%);      /* Adjust for true centering */
+  margin-left: -6px;                /* Offset half the width for centering */
+  width: 12px;                      /* Small circular handle */
   height: 12px;
-  background-color: var(--primary);
-  border-radius: 50%;
-  opacity: 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  z-index: 1;
+  background-color: var(--primary); /* Blue to match progress */
+  border-radius: 50%;               /* Perfect circle */
+  opacity: 0;                       /* Hidden by default */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Small shadow */
+  z-index: 1;                       /* Above progress bar */
 }
 
+/* Show handle when hovering over progress bar */
 .progress-bar-container:hover .progress-bar-handle {
-  opacity: 1;
+  opacity: 1;  /* Fade in on hover */
 }
 
-/* Control buttons */
+/* ===================================================================
+   PLAYBACK CONTROL BUTTONS
+   ===================================================================
+   Play, pause, next, previous buttons
+   ================================================================== */
 .control-buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 32px;
+  display: flex;            /* Horizontal layout */
+  justify-content: center;  /* Center the buttons */
+  align-items: center;      /* Align vertically */
+  gap: 16px;               /* Space between buttons */
+  margin-bottom: 32px;     /* Space below controls */
 }
 
 .mdc-fab {
-  background-color: var(--primary);
-  box-shadow: var(--shadow-light);
+  background-color: var(--primary);  /* Blue background for main button */
+  box-shadow: var(--shadow-light);   /* Subtle shadow */
 }
 
 .mdc-fab--mini {
-  width: 48px;
+  width: 48px;   /* Smaller floating action button */
   height: 48px;
 }
 
 .mdc-fab__icon {
-  color: var(--on-primary);
+  color: var(--on-primary);  /* White icon on blue background */
 }
 
-/* Volume control */
+/* ===================================================================
+   VOLUME CONTROL (if implemented)
+   ===================================================================
+   Volume slider styling
+   ================================================================== */
 .volume-control {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 12px;
+  display: flex;            /* Horizontal layout */
+  align-items: center;      /* Center vertically */
+  justify-content: flex-end; /* Align to right */
+  gap: 12px;               /* Space between elements */
 }
 
 .volume-slider {
-  width: 100px;
+  width: 100px;  /* Fixed width for volume slider */
 }
 
 .mdc-slider__track--active {
-  background-color: var(--primary);
+  background-color: var(--primary);  /* Blue for active portion */
 }
 
 .mdc-slider__track--inactive {
-  background-color: rgba(0, 0, 0, 0.08);
+  background-color: rgba(0, 0, 0, 0.08);  /* Light gray for inactive */
 }
 
 .mdc-slider__thumb-knob {
-  border-color: var(--primary);
-  background-color: var(--primary);
+  border-color: var(--primary);     /* Blue border */
+  background-color: var(--primary); /* Blue fill */
 }
 
-/* Playlist */
+/* ===================================================================
+   PLAYLIST STYLING
+   ===================================================================
+   Playlist header and scrollable track list
+   ================================================================== */
 .playlist-header {
-  padding: 20px;
-  background-color: var(--primary);
-  color: var(--on-primary);
-  flex-shrink: 0;
+  padding: 20px;                    /* Generous padding */
+  background-color: var(--primary); /* Blue header background */
+  color: var(--on-primary);         /* White text on blue */
+  flex-shrink: 0;                   /* Don't shrink this header */
 }
 
 .playlist-header h3 {
-  font-size: 16px;
-  font-weight: 500;
-  margin: 0;
+  font-size: 16px;    /* Medium heading size */
+  font-weight: 500;   /* Medium weight */
+  margin: 0;          /* Remove default margins */
 }
 
 .mdc-list {
-  padding: 0;
+  padding: 0;  /* Remove default list padding */
 }
 
 .playlist-list {
-  flex-grow: 1;
-  overflow-y: auto;
-  height: 0; /* Required for flex-grow to work properly */
+  flex-grow: 1;      /* Take remaining space in card */
+  overflow-y: auto;  /* Scroll when content overflows */
+  height: 0;         /* Required for flex-grow to work properly */
 }
 
-/* Sleek scrollbar */
+/* ===================================================================
+   CUSTOM SCROLLBAR STYLING
+   ===================================================================
+   Sleek, minimal scrollbar for the playlist
+   ================================================================== */
 .playlist-list::-webkit-scrollbar {
-  width: 4px;
+  width: 4px;  /* Thin scrollbar */
 }
 
 .playlist-list::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 2px;
+  background-color: rgba(0, 0, 0, 0.1);  /* Light gray thumb */
+  border-radius: 2px;                    /* Rounded thumb */
 }
 
 .playlist-list::-webkit-scrollbar-track {
-  background: transparent;
+  background: transparent;  /* Invisible track */
 }
 
-/* Playlist items */
+/* ===================================================================
+   PLAYLIST ITEM STYLING
+   ===================================================================
+   Individual track items in the playlist
+   ================================================================== */
 .playlist-item {
-  border-left: 3px solid transparent;
-  height: 56px; 
-  padding: 0 16px;
-  position: relative;
+  border-left: 3px solid transparent;  /* Space for active indicator */
+  height: 56px;                        /* Standard Material Design height */
+  padding: 0 16px;                     /* Horizontal padding */
+  position: relative;                  /* For pseudo-element positioning */
 }
 
+/* Subtle divider line between playlist items */
 .playlist-item::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 16px;
-  right: 16px;
-  height: 1px;
-  background-color: var(--divider);
+  content: '';                        /* Empty pseudo-element */
+  position: absolute;                 /* Position within item */
+  bottom: 0;                         /* At bottom of item */
+  left: 16px;                        /* Start with padding */
+  right: 16px;                       /* End with padding */
+  height: 1px;                       /* Thin line */
+  background-color: var(--divider);  /* Very light gray */
 }
 
+/* Remove divider from last item */
 .playlist-item:last-child::after {
   display: none;
 }
 
+/* Active/playing track styling */
 .playlist-item.mdc-list-item--activated {
-  background-color: rgba(41, 98, 255, 0.04);
-  border-left-color: var(--primary);
+  background-color: rgba(41, 98, 255, 0.04);  /* Very light blue background */
+  border-left-color: var(--primary);          /* Blue left border indicator */
 }
 
 .playlist-item .mdc-list-item__primary-text {
-  font-size: 14px;
-  color: var(--on-surface);
+  font-size: 14px;               /* Standard text size */
+  color: var(--on-surface);      /* Dark text color */
 }
 
 .playlist-item .mdc-list-item__end {
-  color: var(--on-surface-medium);
-  font-size: 12px;
+  color: var(--on-surface-medium);  /* Medium gray for duration */
+  font-size: 12px;                 /* Smaller text for duration */
 }
 
-/* Playlist item styling with flexbox */
+/* ===================================================================
+   PLAYLIST FLEXBOX LAYOUT
+   ===================================================================
+   Ensure proper alignment of playlist item content
+   ================================================================== */
 .mdc-list-item.playlist-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 0;
+  display: flex;            /* Horizontal flexbox layout */
+  align-items: center;      /* Center content vertically */
+  justify-content: space-around;  /* Distribute space */
+  padding: 0;              /* Reset padding (we add it back selectively) */
 }
 
-/* Ensure the content inside each playlist item is properly spaced */
+/* Main text content takes up available space */
 .playlist-item .mdc-list-item__text {
-  flex: 1;
-  margin: 0 16px;
+  flex: 1;         /* Take up remaining space */
+  margin: 0 16px;  /* Add horizontal margins */
 }
 
-/* Adjust end item positioning */
+/* Duration text stays at the end */
 .playlist-item .mdc-list-item__end {
-  flex-shrink: 0;
-  margin-right: 16px;
+  flex-shrink: 0;    /* Don't shrink this element */
+  margin-right: 16px; /* Right margin */
 }
 
-/* Reset Material ripple positioning to work with our flex layout */
+/* Material Design ripple effect positioning */
 .playlist-item .mdc-list-item__ripple {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  position: absolute;  /* Cover the entire item */
+  width: 100%;         /* Full width */
+  height: 100%;        /* Full height */
 }
 
-/* Responsive */
+/* ===================================================================
+   RESPONSIVE DESIGN
+   ===================================================================
+   Mobile and tablet adaptations
+   ================================================================== */
 @media (max-width: 768px) {
+  /* Stack layout vertically on mobile */
   .player-layout {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    height: auto;
+    grid-template-columns: 1fr;  /* Single column layout */
+    gap: 16px;                   /* Smaller gap */
+    height: auto;                /* Auto height */
   }
   
+  /* Adjust track info for mobile */
   .track-info-section {
-    flex-direction: column;
-    text-align: center;
-    padding: 24px 16px 16px;
+    flex-direction: column;  /* Stack vertically */
+    text-align: center;      /* Center align text */
+    padding: 24px 16px 16px; /* Smaller padding */
   }
   
+  /* Smaller album art on mobile */
   .album-art {
-    width: 100px;
+    width: 100px;   /* Reduced size */
     height: 100px;
   }
   
+  /* Horizontal action buttons on mobile */
   .track-actions {
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 16px;
+    flex-direction: row;      /* Horizontal layout */
+    justify-content: center;  /* Center buttons */
+    margin-top: 16px;        /* Space above buttons */
   }
 }
+
+/* ===================================================================
+   END OF STYLESHEET
+   ===================================================================
+   This stylesheet creates a modern, Material Design-inspired
+   media player interface with:
+   - Responsive grid layout
+   - Smooth animations and transitions
+   - Accessible color contrast
+   - Touch-friendly sizing
+   - Clean, minimal aesthetic
+   ================================================================== */

@@ -1,61 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Basic HTML5 document setup -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Media Player</title>
+    
+    <!-- External CSS Libraries -->
+    <!-- Material Design Components for modern UI styling -->
     <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <!-- Google Material Icons for buttons and UI elements -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Google Fonts for typography -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <!-- jPlayer CSS theme for audio player styling -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/skin/blue.monday/jplayer.blue.monday.min.css">
+    <!-- Our custom CSS file -->
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- JavaScript Libraries -->
+    <!-- jQuery - Required for jPlayer and our custom JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jPlayer - HTML5 audio player library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js"></script>
+    <!-- Material Design Components JavaScript -->
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <!-- Our custom JavaScript file (defer = load after HTML is parsed) -->
     <script src="app.js" defer></script>
 </head>
 <body class="mdc-theme--surface">
-    <!-- Updated Header -->
-<header class="mdc-top-app-bar mdc-elevation--z1">
-    <div class="mdc-top-app-bar__row">
-        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-            <span class="mdc-top-app-bar__title">
-                <span class="app-logo">
-                    <span class="material-icons">graphic_eq</span>
+    <!-- TOP NAVIGATION BAR -->
+    <!-- Material Design top app bar with logo and action buttons -->
+    <header class="mdc-top-app-bar mdc-elevation--z1">
+        <div class="mdc-top-app-bar__row">
+            <!-- Left side: App logo and title -->
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                <span class="mdc-top-app-bar__title">
+                    <!-- App logo using Material icon -->
+                    <span class="app-logo">
+                        <span class="material-icons">graphic_eq</span>
+                    </span>
+                    <!-- App name -->
+                    <span class="app-title">SoundWave</span>
                 </span>
-                <span class="app-title">SoundWave</span>
-            </span>
-        </section>
-        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
-            <button class="mdc-icon-button" aria-label="Search">
-                <span class="material-icons">search</span>
-            </button>
-            <button class="mdc-icon-button" aria-label="Add Music">
-                <span class="material-icons">add</span>
-            </button>
-            <button class="mdc-icon-button" aria-label="Account">
-                <span class="material-icons">account_circle</span>
-            </button>
-        </section>
-    </div>
-</header>
+            </section>
+            <!-- Right side: Action buttons -->
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+                <!-- Search button -->
+                <button class="mdc-icon-button" aria-label="Search">
+                    <span class="material-icons">search</span>
+                </button>
+                <!-- Add music button -->
+                <button class="mdc-icon-button" aria-label="Add Music">
+                    <span class="material-icons">add</span>
+                </button>
+                <!-- User account button -->
+                <button class="mdc-icon-button" aria-label="Account">
+                    <span class="material-icons">account_circle</span>
+                </button>
+            </section>
+        </div>
+    </header>
 
+    <!-- MAIN CONTENT AREA -->
+    <!-- Adjust for fixed header height -->
     <main class="mdc-top-app-bar--prominent-fixed-adjust">
         <div class="app-container">
+            <!-- PLAYER LAYOUT: Two-column grid (player + playlist) -->
             <div class="player-layout">
-                <!-- Main Player Card -->
+                
+                <!-- LEFT COLUMN: MAIN PLAYER CARD -->
                 <div class="mdc-card mdc-card--outlined main-player-card">
                     <div class="mdc-card__primary-action" tabindex="0">
-                        <!-- Album Art & Track Info -->
+                        
+                        <!-- TRACK INFORMATION SECTION -->
+                        <!-- Shows current song info, album art, and action buttons -->
                         <div class="track-info-section">
+                            <!-- Album artwork placeholder -->
                             <div class="album-art-container">
                                 <div class="album-art mdc-elevation--z4">
+                                    <!-- Material icon used as placeholder for album art -->
                                     <span class="material-icons">album</span>
                                 </div>
                             </div>
+                            
+                            <!-- Track details (title, artist, format info) -->
                             <div class="track-details">
+                                <!-- Song title (will be updated by JavaScript) -->
                                 <h2 class="mdc-typography--headline5 track-title">SoundHelix Song 1</h2>
+                                <!-- Artist name (will be updated by JavaScript) -->
                                 <p class="mdc-typography--body2 mdc-theme--text-secondary-on-background artist-name">Various Artists</p>
+                                
+                                <!-- Format badges showing file type and quality -->
                                 <div class="track-badges">
                                     <div class="mdc-chip">
                                         <div class="mdc-chip__text">MP3</div>
@@ -65,6 +101,8 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <!-- Action buttons (favorite, share) -->
                             <div class="track-actions">
                                 <button class="mdc-icon-button" aria-label="Favorite">
                                     <span class="material-icons">favorite_border</span>
@@ -75,42 +113,61 @@
                             </div>
                         </div>
 
-                        <!-- Player Controls -->
+                        <!-- PLAYER CONTROLS SECTION -->
+                        <!-- Contains the actual audio player and all controls -->
                         <div class="player-controls-section">
+                            <!-- jPlayer HTML5 audio element (hidden) -->
+                            <!-- This is where the actual audio playback happens -->
                             <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+                            
+                            <!-- jPlayer UI container -->
                             <div id="jp_container_1" class="jp-audio-material" role="application" aria-label="media player">
                                 <div class="jp-type-single">
                                     <div class="jp-gui jp-interface">
-                                        <!-- Progress Slider -->
+                                        
+                                        <!-- PROGRESS BAR SECTION -->
                                         <div class="jp-progress progress-section">
-                                            <!-- Elapsed Time / Total Time -->
+                                            <!-- Time display: current time / total duration -->
                                             <div class="time-display">
+                                                <!-- Current playback time (updated by JavaScript) -->
                                                 <span class="jp-current-time mdc-typography--body2">00:00</span>
                                                 <span class="mdc-typography--body2 mdc-theme--text-secondary-on-background"> / </span>
+                                                <!-- Total track duration (updated by JavaScript) -->
                                                 <span class="jp-duration mdc-typography--body2 mdc-theme--text-secondary-on-background">00:00</span>
                                             </div>
                                             
-                                            <!-- Simple Progress Bar -->
+                                            <!-- Visual progress bar -->
+                                            <!-- Shows how much of the track has been played -->
                                             <div class="progress-bar-container">
+                                                <!-- Background track -->
                                                 <div class="progress-bar-background"></div>
+                                                <!-- Colored progress indicator (width changes with playback) -->
                                                 <div class="progress-bar-elapsed jp-play-bar" style="width: 0%"></div>
+                                                <!-- Draggable handle for seeking -->
                                                 <div class="progress-bar-handle"></div>
                                             </div>
                                         </div>
 
-                                        <!-- Control Buttons -->
+                                        <!-- PLAYBACK CONTROL BUTTONS -->
                                         <div class="jp-controls control-buttons">
+                                            <!-- Previous track button -->
                                             <button class="mdc-icon-button jp-previous" aria-label="Previous">
                                                 <span class="material-icons">skip_previous</span>
                                             </button>
+                                            
+                                            <!-- Play button (shown when paused) -->
                                             <button class="mdc-fab mdc-fab--mini jp-play" aria-label="Play">
                                                 <div class="mdc-fab__ripple"></div>
                                                 <span class="material-icons mdc-fab__icon">play_arrow</span>
                                             </button>
+                                            
+                                            <!-- Pause button (shown when playing, hidden by default) -->
                                             <button class="mdc-fab mdc-fab--mini jp-pause" aria-label="Pause" style="display: none;">
                                                 <div class="mdc-fab__ripple"></div>
                                                 <span class="material-icons mdc-fab__icon">pause</span>
                                             </button>
+                                            
+                                            <!-- Next track button -->
                                             <button class="mdc-icon-button jp-next" aria-label="Next">
                                                 <span class="material-icons">skip_next</span>
                                             </button>
@@ -122,21 +179,33 @@
                     </div>
                 </div>
 
-                <!-- Playlist Card -->
+                <!-- RIGHT COLUMN: PLAYLIST CARD -->
                 <div class="mdc-card mdc-card--outlined playlist-card">
+                    <!-- Playlist header -->
                     <div class="playlist-header">
                         <h3 class="mdc-typography--subtitle1">Now Playing</h3>
                     </div>
                     
+                    <!-- Scrollable list of tracks -->
                     <div class="mdc-list playlist-list" id="playlist">
+                        
+                        <!-- PLAYLIST ITEMS -->
+                        <!-- Each item represents a song that can be played -->
+                        <!-- data-src attribute contains the URL to the audio file -->
+                        
+                        <!-- Track 1 (marked as currently active) -->
                         <div class="mdc-list-item mdc-list-item--activated playlist-item" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+                            <!-- Material Design ripple effect for clicks -->
                             <span class="mdc-list-item__ripple"></span>
+                            <!-- Song title -->
                             <span class="mdc-list-item__text">
                                 <span class="mdc-list-item__primary-text">SoundHelix Song 1</span>
                             </span>
+                            <!-- Track duration -->
                             <span class="mdc-list-item__end">3:24</span>
                         </div>
                         
+                        <!-- Track 2 -->
                         <div class="mdc-list-item playlist-item" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
                             <span class="mdc-list-item__ripple"></span>
                             <span class="mdc-list-item__text">
@@ -145,6 +214,7 @@
                             <span class="mdc-list-item__end">4:12</span>
                         </div>
                         
+                        <!-- Track 3 -->
                         <div class="mdc-list-item playlist-item" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3">
                             <span class="mdc-list-item__ripple"></span>
                             <span class="mdc-list-item__text">
@@ -153,6 +223,7 @@
                             <span class="mdc-list-item__end">3:56</span>
                         </div>
                         
+                        <!-- Track 4 -->
                         <div class="mdc-list-item playlist-item" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3">
                             <span class="mdc-list-item__ripple"></span>
                             <span class="mdc-list-item__text">
