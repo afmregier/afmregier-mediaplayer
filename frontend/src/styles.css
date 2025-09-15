@@ -1,3 +1,14 @@
+/* Highlight active shuffle/repeat buttons */
+.jp-shuffle.active, .jp-repeat.active {
+  color: #1976d2;
+  background-color: #e3f2fd;
+  border-radius: 50%;
+}
+
+/* Add spacing between control buttons */
+.jp-controls .mdc-icon-button, .jp-controls .mdc-fab {
+  margin: 0 4px;
+}
 /* ===================================================================
    MEDIA PLAYER STYLESHEET
    ===================================================================

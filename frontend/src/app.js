@@ -38,6 +38,15 @@ $(document).ready(function () {
     console.log("Document ready"); // Debug message to browser console
     
     // ===================================================================
+    // SHUFFLE AND REPEAT STATE
+    // ===================================================================
+    let isShuffle = false;
+    let isRepeat = false;
+    function getShuffledIndex(currentIndex, length) {
+        let indices = Array.from({length}, (_, i) => i);
+        indices.splice(currentIndex, 1);
+        return indices[Math.floor(Math.random() * indices.length)];
+    }
     // INITIALIZE VARIABLES
     // ===================================================================
     // These variables track the progress bar state to prevent glitches
@@ -181,15 +190,18 @@ $(document).ready(function () {
                 // Reset buttons to play state
                 $('.jp-pause').hide();
                 $('.jp-play').show();
-                
-                // Automatically play the next track in the playlist
-                const $items = $('.playlist-item');                           // Get all playlist items
-                const currentIndex = $('.playlist-item.mdc-list-item--activated').index(); // Find current track
-                const nextIndex = currentIndex + 1;                           // Calculate next track index
-                
-                // If there's a next track, play it
-                if (nextIndex < $items.length) {
-                    $items.eq(nextIndex).click();  // Simulate clicking the next track
+                const $items = $('.playlist-item');
+                const currentIndex = $('.playlist-item.mdc-list-item--activated').index();
+                if (isRepeat) {
+                    $items.eq(currentIndex).click();
+                } else if (isShuffle) {
+                    let nextIndex = getShuffledIndex(currentIndex, $items.length);
+                    $items.eq(nextIndex).click();
+                } else {
+                    const nextIndex = currentIndex + 1;
+                    if (nextIndex < $items.length) {
+                        $items.eq(nextIndex).click();
+                    }
                 }
             },
             
@@ -302,19 +314,15 @@ $(document).ready(function () {
         // When the user clicks the "previous" button
         $('.jp-previous').on('click', function() {
             console.log("Previous button clicked");
-            
-            // Find the current track in the playlist
-            const $items = $('.playlist-item');                              // Get all playlist items
-            const currentIndex = $('.playlist-item.mdc-list-item--activated').index(); // Find current
-            
-            // Calculate the previous track index with wraparound
-            let prevIndex = currentIndex - 1;
-            if (prevIndex < 0) {
-                // If we're at the first track, wrap around to the last track
-                prevIndex = $items.length - 1;
+            const $items = $('.playlist-item');
+            const currentIndex = $('.playlist-item.mdc-list-item--activated').index();
+            let prevIndex;
+            if (isShuffle) {
+                prevIndex = getShuffledIndex(currentIndex, $items.length);
+            } else {
+                prevIndex = currentIndex - 1;
+                if (prevIndex < 0) prevIndex = $items.length - 1;
             }
-            
-            // Simulate clicking on the previous track to play it
             $items.eq(prevIndex).click();
             return false;
         });
@@ -325,21 +333,29 @@ $(document).ready(function () {
         // When the user clicks the "next" button
         $('.jp-next').on('click', function() {
             console.log("Next button clicked");
-            
-            // Find the current track in the playlist
-            const $items = $('.playlist-item');                              // Get all playlist items
-            const currentIndex = $('.playlist-item.mdc-list-item--activated').index(); // Find current
-            
-            // Calculate the next track index with wraparound
-            let nextIndex = currentIndex + 1;
-            if (nextIndex >= $items.length) {
-                // If we're at the last track, wrap around to the first track
-                nextIndex = 0;
+            const $items = $('.playlist-item');
+            const currentIndex = $('.playlist-item.mdc-list-item--activated').index();
+            let nextIndex;
+            if (isShuffle) {
+                nextIndex = getShuffledIndex(currentIndex, $items.length);
+            } else {
+                nextIndex = currentIndex + 1;
+                if (nextIndex >= $items.length) nextIndex = 0;
             }
-            
-            // Simulate clicking on the next track to play it
             $items.eq(nextIndex).click();
             return false;
+        });
+
+        // SHUFFLE BUTTON HANDLER
+        $('.jp-shuffle').on('click', function() {
+            isShuffle = !isShuffle;
+            $(this).toggleClass('active', isShuffle);
+        });
+
+        // REPEAT BUTTON HANDLER
+        $('.jp-repeat').on('click', function() {
+            isRepeat = !isRepeat;
+            $(this).toggleClass('active', isRepeat);
         });
 
     } catch (err) {
