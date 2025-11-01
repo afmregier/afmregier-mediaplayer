@@ -47,6 +47,84 @@ $(document).ready(function () {
         indices.splice(currentIndex, 1);
         return indices[Math.floor(Math.random() * indices.length)];
     }
+
+    // --- LIKE BUTTON: persistent likes via localStorage ------------------
+    // Store likes keyed by data-src (fallback to index if data-src missing)
+    let likes = {};
+
+    function loadLikesFromStorage() {
+        try {
+            const raw = localStorage.getItem('mp_likes');
+            likes = raw ? JSON.parse(raw) : {};
+        } catch (e) {
+            likes = {};
+            console.warn('Failed to load likes', e);
+        }
+    }
+
+    function saveLikesToStorage() {
+        try {
+            localStorage.setItem('mp_likes', JSON.stringify(likes));
+        } catch (e) {
+            console.warn('Failed to save likes', e);
+        }
+    }
+
+    function updateLikeUI($item) {
+        const key = $item.data('src') || $item.index();
+        const liked = !!likes[key];
+
+        // Create button if missing
+        let $btn = $item.find('.like-button');
+        if (!$btn.length) {
+            // lightweight button; styling minimal so it works with existing UI
+            $btn = $('<button/>', {
+                'class': 'like-button',
+                'type': 'button',
+                'aria-label': 'Like'
+            }).css({
+                border: 'none',
+                background: 'transparent',
+                cursor: 'pointer',
+                'font-size': '18px',
+                padding: 0,
+                marginLeft: '8px',
+                color: liked ? '#e53935' : '#666'
+            });
+
+            // Try to append near meta/controls if present, otherwise append to item
+            const $meta = $item.find('.mdc-list-item__meta').last();
+            if ($meta.length) {
+                $meta.after($btn);
+            } else {
+                $item.append($btn);
+            }
+        }
+
+        // Update visual state
+        $btn.text(liked ? '♥' : '♡');
+        $btn.toggleClass('liked', liked);
+        $btn.css('color', liked ? '#e53935' : '#666');
+    }
+
+    // Initialize likes and ensure all items show a like button
+    loadLikesFromStorage();
+    $('.playlist-item').each(function() {
+        updateLikeUI($(this));
+    });
+
+    // Handle like button clicks (delegated to support dynamic items)
+    $(document).on('click', '.playlist-item .like-button', function(e) {
+        e.stopPropagation();  // prevent selecting/playing the track
+        const $item = $(this).closest('.playlist-item');
+        const key = $item.data('src') || $item.index();
+        likes[key] = !likes[key];
+        saveLikesToStorage();
+        updateLikeUI($item);
+        return false;
+    });
+
+    // ===================================================================
     // INITIALIZE VARIABLES
     // ===================================================================
     // These variables track the progress bar state to prevent glitches
