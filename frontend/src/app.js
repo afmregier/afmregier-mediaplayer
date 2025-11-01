@@ -37,7 +37,7 @@ function smoothPercentage(current, previous, max) {
 $(document).ready(function () {
     console.log("Document ready"); // Debug message to browser console
     
-    // ===================================================================
+    // ==================================f=================================
     // SHUFFLE AND REPEAT STATE
     // ===================================================================
     let isShuffle = false;
