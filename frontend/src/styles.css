@@ -461,6 +461,43 @@ body {
   margin-right: 16px; /* Right margin */
 }
 
+/* ===================================================================
+   LIKE BUTTON STYLING
+   ===================================================================
+   Like button for each playlist item
+   ================================================================== */
+.like-button {
+  background: none;              /* No background */
+  border: none;                  /* No border */
+  cursor: pointer;               /* Show it's clickable */
+  padding: 8px;                  /* Clickable area */
+  margin-right: 8px;             /* Space before duration */
+  display: flex;                 /* Center the icon */
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;            /* Circular button */
+  transition: background-color 0.2s ease; /* Smooth hover effect */
+  flex-shrink: 0;                /* Don't shrink */
+  position: relative;            /* Create stacking context */
+  z-index: 2;                    /* Above ripple effect */
+}
+
+.like-button .material-icons {
+  font-size: 20px;               /* Icon size */
+  color: var(--on-surface-medium); /* Medium gray color */
+  transition: color 0.2s ease;   /* Smooth color transition */
+}
+
+/* Hover effect */
+.like-button:hover {
+  background-color: rgba(0, 0, 0, 0.04); /* Light gray background on hover */
+}
+
+/* Liked state - filled heart with red color */
+.like-button.liked .material-icons {
+  color: #e91e63;                /* Material pink/red color */
+}
+
 /* Material Design ripple effect positioning */
 .playlist-item .mdc-list-item__ripple {
   position: absolute;  /* Cover the entire item */
