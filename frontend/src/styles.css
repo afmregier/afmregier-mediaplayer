@@ -37,6 +37,7 @@
   --on-surface-medium: rgba(0, 0, 0, 0.6);  /* Secondary text color (60% black) */
   --on-surface-light: rgba(0, 0, 0, 0.38);  /* Disabled text color (38% black) */
   --divider: rgba(0, 0, 0, 0.06);            /* Subtle divider lines */
+  --like-color: #e91e63;        /* Color for liked items (Material pink) */
   
   /* SHADOWS - Material Design elevation system */
   --shadow-light: 0 1px 2px rgba(0, 0, 0, 0.08);   /* Subtle shadow for cards */
@@ -495,7 +496,7 @@ body {
 
 /* Liked state - filled heart with red color */
 .like-button.liked .material-icons {
-  color: #e91e63;                /* Material pink/red color */
+  color: var(--like-color);      /* Material pink/red color */
 }
 
 /* Material Design ripple effect positioning */

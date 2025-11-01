@@ -378,8 +378,6 @@ $(document).ready(function () {
                 $button.addClass('liked');
                 $icon.text('favorite');
             }
-            
-            return false; // Prevent default behavior
         });
 
     } catch (err) {
