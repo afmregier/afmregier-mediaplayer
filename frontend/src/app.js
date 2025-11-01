@@ -358,30 +358,6 @@ $(document).ready(function () {
             $(this).toggleClass('active', isRepeat);
         });
 
-        // ===================================================================
-        // LIKE BUTTON HANDLERS
-        // ===================================================================
-        // When the user clicks a like button on a playlist item
-        $('.like-button').on('click', function(e) {
-            e.stopPropagation(); // Prevent triggering the playlist item click
-            
-            const $button = $(this);
-            const $icon = $button.find('.material-icons');
-            
-            // Toggle the liked state
-            if ($button.hasClass('liked')) {
-                // Unlike: change to outline heart
-                $button.removeClass('liked');
-                $icon.text('favorite_border');
-            } else {
-                // Like: change to filled heart
-                $button.addClass('liked');
-                $icon.text('favorite');
-            }
-            
-            return false; // Prevent default behavior
-        });
-
     } catch (err) {
         // If anything goes wrong, log the error to the browser console
         console.error("CRITICAL ERROR:", err);
