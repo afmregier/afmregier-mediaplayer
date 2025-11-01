@@ -9,6 +9,37 @@
 .jp-controls .mdc-icon-button, .jp-controls .mdc-fab {
   margin: 0 4px;
 }
+
+/* ===================================================================
+   LIKE BUTTON STYLING
+   ===================================================================
+   Styling for the like button in playlist items
+   ================================================================== */
+.like-button {
+  color: var(--on-surface-medium);
+  transition: color 0.2s ease, transform 0.2s ease;
+  margin: 0 8px;
+}
+
+.like-button:hover {
+  color: #e91e63;
+  transform: scale(1.1);
+}
+
+.like-button.liked {
+  color: #e91e63;
+}
+
+.like-button.liked .material-icons {
+  animation: heartbeat 0.3s ease;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
 /* ===================================================================
    MEDIA PLAYER STYLESHEET
    ===================================================================
@@ -453,6 +484,7 @@ body {
 .playlist-item .mdc-list-item__text {
   flex: 1;         /* Take up remaining space */
   margin: 0 16px;  /* Add horizontal margins */
+  margin-right: 0; /* Remove right margin to make space for like button */
 }
 
 /* Duration text stays at the end */

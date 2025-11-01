@@ -358,6 +358,39 @@ $(document).ready(function () {
             $(this).toggleClass('active', isRepeat);
         });
 
+        // ===================================================================
+        // LIKE BUTTON HANDLER
+        // ===================================================================
+        // When the user clicks the like button for a track
+        $('.like-button').on('click', function(e) {
+            e.stopPropagation(); // Prevent the playlist item click event
+            
+            const $button = $(this);
+            const $playlistItem = $button.closest('.playlist-item');
+            const $icon = $button.find('.material-icons');
+            
+            // Toggle the liked state
+            const isLiked = $playlistItem.data('liked') === 'true';
+            const newLikedState = !isLiked;
+            
+            // Update the data attribute
+            $playlistItem.data('liked', newLikedState.toString());
+            $playlistItem.attr('data-liked', newLikedState.toString());
+            
+            // Update the icon (filled vs outlined heart)
+            if (newLikedState) {
+                $icon.text('favorite'); // Filled heart
+                $button.addClass('liked');
+            } else {
+                $icon.text('favorite_border'); // Outlined heart
+                $button.removeClass('liked');
+            }
+            
+            console.log(`Track ${$playlistItem.find('.mdc-list-item__primary-text').text()} ${newLikedState ? 'liked' : 'unliked'}`);
+            
+            return false; // Prevent default behavior
+        });
+
     } catch (err) {
         // If anything goes wrong, log the error to the browser console
         console.error("CRITICAL ERROR:", err);
