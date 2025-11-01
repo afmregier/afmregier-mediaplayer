@@ -105,6 +105,10 @@ $(document).ready(function () {
         $btn.text(liked ? '♥' : '♡');
         $btn.toggleClass('liked', liked);
         $btn.css('color', liked ? '#e53935' : '#666');
+
+        // Accessibility: indicate pressed state and add a tooltip
+        $btn.attr('aria-pressed', liked ? 'true' : 'false');
+        $btn.attr('title', liked ? 'Unlike' : 'Like');
     }
 
     // Initialize likes and ensure all items show a like button
@@ -146,6 +150,26 @@ $(document).ready(function () {
             .progress-bar-handle {
                 transition: opacity 0.2s !important;  /* Only animate opacity */
                 transition-property: opacity !important;
+            }
+
+            /* Like button styling */
+            .playlist-item .like-button {
+                border: none;
+                background: transparent;
+                cursor: pointer;
+                font-size: 18px;
+                padding: 0;
+                margin-left: 8px;
+                color: #666;
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .playlist-item .like-button.liked {
+                color: #e53935;
+            }
+            .playlist-item .like-button:focus {
+                outline: 2px solid rgba(0,0,0,0.12);
+                outline-offset: 2px;
             }
         `)
         .appendTo('head');  // Add this CSS to the page head
@@ -370,6 +394,9 @@ $(document).ready(function () {
             // Update which track is marked as "active" in the playlist
             $('.playlist-item').removeClass('mdc-list-item--activated');  // Remove active from all
             $(this).addClass('mdc-list-item--activated');                 // Add active to clicked item
+
+            // Ensure like button UI for the activated item is up-to-date
+            updateLikeUI($(this));
             
             // Update the main player display with the new track info
             $('.track-title').text(title);   // Update displayed song title
