@@ -362,7 +362,8 @@ $(document).ready(function () {
         // LIKE BUTTON HANDLER
         // ===================================================================
         // When the user clicks the like button for a track
-        $('.like-button').on('click', function(e) {
+        // Using event delegation to handle dynamically added items
+        $(document).on('click', '.like-button', function(e) {
             e.stopPropagation(); // Prevent the playlist item click event
             
             const $button = $(this);
@@ -387,8 +388,6 @@ $(document).ready(function () {
             }
             
             console.log(`Track ${$playlistItem.find('.mdc-list-item__primary-text').text()} ${newLikedState ? 'liked' : 'unliked'}`);
-            
-            return false; // Prevent default behavior
         });
 
     } catch (err) {
