@@ -483,7 +483,7 @@ body {
 /* Main text content takes up available space */
 .playlist-item .mdc-list-item__text {
   flex: 1;         /* Take up remaining space */
-  margin: 0 0 0 16px;  /* Left margin only, right margin removed for like button */
+  margin: 0 0 0 16px;  /* Left margin only, right margin set to 0 to accommodate like button spacing */
 }
 
 /* Duration text stays at the end */

@@ -371,11 +371,10 @@ $(document).ready(function () {
             const $icon = $button.find('.material-icons');
             
             // Toggle the liked state
-            const isLiked = $playlistItem.data('liked') === 'true';
+            const isLiked = $playlistItem.attr('data-liked') === 'true';
             const newLikedState = !isLiked;
             
             // Update the data attribute
-            $playlistItem.data('liked', newLikedState.toString());
             $playlistItem.attr('data-liked', newLikedState.toString());
             
             // Update the icon (filled vs outlined heart)
