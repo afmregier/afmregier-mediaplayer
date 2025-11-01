@@ -48,27 +48,9 @@ $(document).ready(function () {
         return indices[Math.floor(Math.random() * indices.length)];
     }
 
-    // --- LIKE BUTTON: persistent likes via localStorage ------------------
+    // --- LIKE BUTTON: in-memory likes only (no persistence) -------------
     // Store likes keyed by data-src (fallback to index if data-src missing)
     let likes = {};
-
-    function loadLikesFromStorage() {
-        try {
-            const raw = localStorage.getItem('mp_likes');
-            likes = raw ? JSON.parse(raw) : {};
-        } catch (e) {
-            likes = {};
-            console.warn('Failed to load likes', e);
-        }
-    }
-
-    function saveLikesToStorage() {
-        try {
-            localStorage.setItem('mp_likes', JSON.stringify(likes));
-        } catch (e) {
-            console.warn('Failed to save likes', e);
-        }
-    }
 
     function updateLikeUI($item) {
         const key = $item.data('src') || $item.index();
@@ -111,19 +93,20 @@ $(document).ready(function () {
         $btn.attr('title', liked ? 'Unlike' : 'Like');
     }
 
-    // Initialize likes and ensure all items show a like button
-    loadLikesFromStorage();
+    // Initialize likes (in-memory) and ensure all items show a like button
     $('.playlist-item').each(function() {
         updateLikeUI($(this));
     });
 
     // Handle like button clicks (delegated to support dynamic items)
-    $(document).on('click', '.playlist-item .like-button', function(e) {
+    $(document).on('click', '.like-button', function(e) {
         e.stopPropagation();  // prevent selecting/playing the track
-        const $item = $(this).closest('.playlist-item');
+        const $button = $(this);
+        const $item = $button.closest('.playlist-item');
         const key = $item.data('src') || $item.index();
+        // Toggle in-memory only
         likes[key] = !likes[key];
-        saveLikesToStorage();
+        // Update UI for the affected item
         updateLikeUI($item);
         return false;
     });
@@ -461,28 +444,6 @@ $(document).ready(function () {
         $('.jp-repeat').on('click', function() {
             isRepeat = !isRepeat;
             $(this).toggleClass('active', isRepeat);
-        });
-
-        // ===================================================================
-        // LIKE BUTTON HANDLERS
-        // ===================================================================
-        // When the user clicks a like button on a playlist item
-        $('.like-button').on('click', function(e) {
-            e.stopPropagation(); // Prevent triggering the playlist item click
-            
-            const $button = $(this);
-            const $icon = $button.find('.material-icons');
-            
-            // Toggle the liked state
-            if ($button.hasClass('liked')) {
-                // Unlike: change to outline heart
-                $button.removeClass('liked');
-                $icon.text('favorite_border');
-            } else {
-                // Like: change to filled heart
-                $button.addClass('liked');
-                $icon.text('favorite');
-            }
         });
 
     } catch (err) {
